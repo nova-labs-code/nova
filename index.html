@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+const vowelMap = { a:"e", e:"i", i:"o", o:"u", u:"a" };
+
+const consMap = {
+  b:"v", c:"k", d:"t", f:"s", g:"k", h:"",
+  j:"z", l:"r", m:"n", p:"b", q:"k",
+  r:"l", s:"m", t:"d", v:"f", w:"v",
+  x:"ks", y:"j", z:"s"
+};
+
+const vowels = ["a","e","i","o","u"];
+
+function convertWord(word) {
+  word = word.toLowerCase().replace(/[^a-z]/g, "");
+  if (!word) return "";
+
+  word = word.replace(/ing/g, "en")
+             .replace(/th/g, "d")
+             .replace(/ed/g, "a");
+
+  let result = "";
+
+  for (let c of word) {
+    if (vowelMap[c]) result += vowelMap[c];
+    else if (consMap[c]) result += consMap[c];
+    else result += c;
+  }
+
+  if (result.length > 8) result = result.slice(0, 8);
+  if (!vowels.includes(result[result.length - 1])) result += "a";
+
+  return result;
+}
+
+// --- GET TEXT FROM URL ---
+let text = "";
+
+// Normal browser case
+if (location.hash.startsWith("#text=")) {
+  text = location.hash.slice(6);
+}
+
+// Get Contents of URL case (encoded hash)
+else {
+  const m = location.href.match(/%23text%3D(.+)/i);
+  if (m) text = m[1];
+}
+
+if (text) {
+  try {
+    text = decodeURIComponent(text);
+    text = decodeURIComponent(text);
+  } catch(e){}
+
+  const output = text
+    .split(/\s+/)
+    .map(convertWord)
+    .filter(Boolean)
+    .join(" ");
+
+  // SHOW RESULT (PLAIN TEXT)
+  document.body.textContent = output;
+}
+</script>
+</body>
+</html>
