@@ -2,68 +2,40 @@
 <html>
 <body>
 <script>
-const vowelMap = { a:"e", e:"i", i:"o", o:"u", u:"a" };
-
-const consMap = {
-  b:"v", c:"k", d:"t", f:"s", g:"k", h:"",
-  j:"z", l:"r", m:"n", p:"b", q:"k",
-  r:"l", s:"m", t:"d", v:"f", w:"v",
-  x:"ks", y:"j", z:"s"
+const map = {
+  a:"e", e:"i", i:"o", o:"u", u:"aq",
+  b:"va", c:"ka", d:"ta", f:"sa", g:"ga",
+  h:"ha", j:"za", k:"ki", l:"ra", m:"na",
+  n:"ni", p:"ba", q:"qo", r:"la", s:"ma",
+  t:"da", v:"fa", w:"wa", x:"ksa", y:"ja",
+  z:"so"
 };
 
-const vowels = ["a","e","i","o","u"];
+const endings = {
+  ing:"@1",
+  ed:"@2",
+  th:"@3"
+};
 
-function convertWord(word) {
-  word = word.toLowerCase().replace(/[^a-z]/g, "");
-  if (!word) return "";
+function encode(text) {
+  text = text.toLowerCase();
 
-  word = word.replace(/ing/g, "en")
-             .replace(/th/g, "d")
-             .replace(/ed/g, "a");
-
-  let result = "";
-
-  for (let c of word) {
-    if (vowelMap[c]) result += vowelMap[c];
-    else if (consMap[c]) result += consMap[c];
-    else result += c;
+  for (const e in endings) {
+    text = text.replaceAll(e, endings[e]);
   }
 
-  if (result.length > 8) result = result.slice(0, 8);
-  if (!vowels.includes(result[result.length - 1])) result += "a";
-
-  return result;
+  let out = "";
+  for (const c of text) {
+    out += map[c] ?? c;
+  }
+  return out;
 }
 
-// --- GET TEXT FROM URL ---
-let text = "";
+let input = location.hash.startsWith("#text=")
+  ? decodeURIComponent(location.hash.slice(6))
+  : "";
 
-// Normal browser case
-if (location.hash.startsWith("#text=")) {
-  text = location.hash.slice(6);
-}
-
-// Get Contents of URL case (encoded hash)
-else {
-  const m = location.href.match(/%23text%3D(.+)/i);
-  if (m) text = m[1];
-}
-
-if (text) {
-  try {
-    text = decodeURIComponent(text);
-    text = decodeURIComponent(text);
-  } catch(e){}
-
-  const output = text
-    .split(/\s+/)
-    .map(convertWord)
-    .filter(Boolean)
-    .join(" ");
-
-  // SHOW RESULT (PLAIN TEXT)
-  document.body.textContent = output;
-}
+document.body.textContent = encode(input);
 </script>
 </body>
 </html>
