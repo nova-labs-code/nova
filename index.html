@@ -1,3 +1,106 @@
-<html>
-<h1> work in progress</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Install Shortcut</title>
+
+<style>
+:root {
+  --bg: #0f0f0f;
+  --card: #1c1c1e;
+  --text: #ffffff;
+  --sub: #b0b0b5;
+  --accent: #0a84ff;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card {
+  max-width: 420px;
+  width: 100%;
+  background: var(--card);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.4);
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 26px;
+}
+
+p {
+  margin: 0 0 16px;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+ul {
+  padding-left: 18px;
+  color: var(--sub);
+}
+
+.button {
+  display: block;
+  text-align: center;
+  margin-top: 22px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--accent);
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.note {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--sub);
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="card">
+    <h1>Install Shortcut</h1>
+    <p>
+      This shortcut adds extra functionality to your iPhone using the
+      Shortcuts app.
+    </p>
+
+    <ul>
+      <li>Runs inside the Shortcuts app</li>
+      <li>No Home Screen icon required</li>
+      <li>Permissions are requested on first run</li>
+    </ul>
+
+    <a class="button"
+       href="https://www.icloud.com/shortcuts/2cced031f38b4ebf8ba986116f1015c6">
+       Install Shortcut
+    </a>
+
+    <div class="note">
+      Opens Apple’s official Shortcuts installer
+    </div>
+  </div>
+</div>
+</body>
 </html>
