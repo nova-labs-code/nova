@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+const revMap = {
+  e:"a", i:"e", o:"i", u:"o", aq:"u",
+  va:"b", ka:"c", ta:"d", sa:"f", ga:"g",
+  ha:"h", za:"j", ki:"k", ra:"l", na:"m",
+  ni:"n", ba:"p", qo:"q", la:"r", ma:"s",
+  da:"t", fa:"v", wa:"w", ksa:"x", ja:"y",
+  so:"z"
+};
+
+const revEndings = {
+  "@1":"ing",
+  "@2":"ed",
+  "@3":"th"
+};
+
+function decode(text) {
+  // restore endings
+  for (const e in revEndings) {
+    text = text.replaceAll(e, revEndings[e]);
+  }
+
+  let out = "";
+  for (let i = 0; i < text.length;) {
+    let chunk =
+      text.slice(i, i+3) in revMap ? text.slice(i, i+3) :
+      text.slice(i, i+2) in revMap ? text.slice(i, i+2) :
+      text.slice(i, i+1);
+
+    out += revMap[chunk] ?? chunk;
+    i += chunk.length;
+  }
+  return out;
+}
+
+let input = location.hash.startsWith("#text=")
+  ? decodeURIComponent(location.hash.slice(6))
+  : "";
+
+document.body.textContent = decode(input);
+</script>
+</body>
+</html>
